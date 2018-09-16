@@ -4,7 +4,7 @@
 <head>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <jsp:include page="/WEB-INF/views/include/base-include.jsp">
-	<jsp:param name="include" value="base,layer,jqgrid,jquery-menu" />
+	<jsp:param name="include" value="base,layer,jqgrid,layui" />
 </jsp:include>
 
 <title>qcz - 初始化框架</title>
@@ -31,14 +31,14 @@ body {
 	height: 88%;
 }
 
-.jquery-accordion-menu {
+/* .jquery-accordion-menu {
 	width: 18%;
 	height: 100%;
 	overflow-y: auto;
 	background: #414956;
-}
+} */
 
-.filterinput {
+/* .filterinput {
 	background-color: rgba(249, 244, 244, 0);
 	border-radius: 15px;
 	width: 90%;
@@ -47,7 +47,7 @@ body {
 	text-indent: 0.5em;
 	font-weight: bold;
 	color: #FFF;
-}
+} */
 
 #demo-list a {
 	overflow: hidden;
@@ -55,6 +55,11 @@ body {
 	-o-text-overflow: ellipsis;
 	white-space: nowrap;
 	width: 100%;
+	text-decoration: none;
+}
+
+#demo-list {
+	top: 10%;
 }
 
 .header {
@@ -67,9 +72,9 @@ body {
 }
 
 .iframe {
-	width: 80%;
+	width: 88%;
 	height: 97%;
-	margin-left: 19%;
+	margin-left: 11%;
 }
 
 .title {
@@ -109,14 +114,14 @@ body {
 
 .current-site {
 	height: 4.5%;
-	width: 82%;
-	margin-left: 18%;
+	width: 89%;
+	margin-left: 11%;
 	padding: 5px 0 5px 10px;
 }
 </style>
 </head>
 <body>
-	<div class="header">
+	<div class="header layui-header">
 		<div class="title"><img src="${ctxStatic }/common/images/logo6.png"></div>
 		<div class="loginInfo">
 			<ul class="nav nav-pills">
@@ -128,39 +133,40 @@ body {
 		</div>
 	</div>
 	<div class="content">
-		<div id="jquery-accordion-menu" class="jquery-accordion-menu red">
-			<ul id="demo-list">
-				<c:forEach items="${menuTrees }" var="item">
+		<div id="demo-list" class="layui-side layui-bg-black">
+			<ul class="layui-nav layui-nav-tree layui-inline" lay-filter="demo" style="margin-right: 10px;">
+				<c:forEach items="${menuTrees }" var="itemOne">
 					<c:choose>
-						<c:when test="${item.hasChild }">
-							<li class="menuli" data-title="${item.name }"><a href="#" class="menua"><i class="${item.icon }"></i>${item.name } </a>
-								<ul class="submenu">
-									<c:forEach items="${item.childrens }" var="item">
+						<c:when test="${itemOne.hasChild }">
+							<li class="layui-nav-item layui-nav-itemed">
+								<a href="#"><i class="${itemOne.icon }"></i>&nbsp;&nbsp;${itemOne.name } </a>
+								<dl class="layui-nav-child">
+									<c:forEach items="${itemOne.childrens }" var="itemTwo">
 										<c:choose>
-											<c:when test="${item.hasChild }">
-												<li class="menuli" data-title="${item.name }"><a href="#" class="menua"><i class="${item.icon }"></i>${item.name } </a>
-													<ul class="submenu">
-														<c:forEach items="${item.childrens }" var="item">
-															<li class="menuli" data-title="${item.name }"><a class="J_menuItem menua" href="${ctx}${item.url }"><i class="${item.icon }"></i>${item.name }  </a></li>
+											<c:when test="${itemTwo.hasChild }">
+												<li class="layui-nav-item layui-nav-itemed">
+													<a href="#"><i class="${itemTwo.icon }"></i>&nbsp;&nbsp;${itemTwo.name } </a>
+													<dl class="layui-nav-child">
+														<c:forEach items="${itemTwo.childrens }" var="itemThree">
+															<dd><a data-title="${itemOne.name} > ${itemTwo.name} > ${itemThree.name}" class="J_menuItem menua" href="#"><i class="${itemThree.icon }"></i>&nbsp;&nbsp;${itemThree.name } </a></dd>
 														</c:forEach>
-													</ul>
+													</dl>
 												</li>
 											</c:when>
 											<c:otherwise>
-												<li class="menuli" data-title="${item.name }"><a class="J_menuItem menua" href="${ctx}${item.url }"><i class="${item.icon }"></i>${item.name } </a></li>
+												<dd><a data-title="${itemOne.name} > ${itemTwo.name}" class="J_menuItem menua" href="${ctx}${itemTwo.url }"><i class="${itemTwo.icon }"></i>&nbsp;&nbsp;${itemTwo.name } </a></dd>
 											</c:otherwise>
 										</c:choose>
 									</c:forEach>
-								</ul>
+								</dl>
 							</li>
 						</c:when>
 						<c:otherwise>
-							<li class="menuli" data-title="${item.name }"><a class="J_menuItem menua" href="${ctx}${item.url }"><i class="${item.icon }"></i>${item.name } </a></li>
+							<li class="layui-nav-item"><a data-title="${itemOne.name }" class="J_menuItem menua" href="${ctx}${itemOne.url }"><i class="${itemOne.icon }"></i>&nbsp;&nbsp;${itemOne.name } </a></li>
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
 			</ul>
-			<div class="jquery-accordion-menu-footer"></div>
 		</div>
 		<div class="current-site">当前位置：<span id="site" class="text-danger"></span></div>
 		<hr style="margin: 0;">
@@ -170,59 +176,30 @@ body {
 	</div>
 
 	<script type="text/javascript">
-		(function($) {
-			$.expr[":"].Contains = function(a, i, m) {
-				return (a.textContent || a.innerText || "").toUpperCase().indexOf(m[3].toUpperCase()) >= 0;
-			};
-			function filterList(header, list) {
-				var form = $("<form>").attr({
-					"class" : "filterform",
-					action : "#",
-					style : "padding-top:10px;"
-				}), input = $("<input>").attr({
-					"class" : "filterinput",
-					type : "text"
-				});
-				$(form).append(input).appendTo(header);
-				$(input).change(function() {
-					var filter = $(this).val();
-					if (filter) {
-						$matches = $(list).find("a:Contains(" + filter + ")").parent();
-						$("li", list).not($matches).slideUp();
-						$matches.slideDown();
-					} else {
-						$(list).find("li").slideDown();
-					}
-					return false;
-				}).keyup(function() {
-					$(this).change();
-				});
-			}
-			$(function() {
-				filterList($("#form"), $("#demo-list"));
-				//菜单点击
-				$(".J_menuItem").on('click', function() {
-					var url = $(this).attr('href');
-					$("#J_iframe").attr('src', url);
-					return false;
-				});
-				$(".menua").click(function(event) {
-					if ($(this).attr("href") == "#") {
-						return;
-					}
-					var thisTitle = "";
-					$(this).parents("li").each(function(){
-						thisTitle = $(this).attr("data-title") + " > " + thisTitle;
-					});
-					$("#site").text(thisTitle.substring(0,thisTitle.length-2));
-				});
+		layui.use('element', function(){
+		  var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+		  
+		  //监听导航点击
+		  element.on('nav(demo)', function(elem){
+			layer.msg(elem.text());
+		  });
+		});
+
+		$(function() {
+			//菜单点击
+			$(".J_menuItem").on('click', function() {
+				var url = $(this).attr('href');
+				$("#J_iframe").attr('src', url);
+				return false;
 			});
-		})(jQuery);
+			$(".menua").click(function(event) {
+				if ($(this).attr("href") == "#") {
+					return;
+				}
+				var thisTitle = $(this).attr("data-title");
+				$("#site").text(thisTitle);
+			});
+		});
 	</script>
-
-	<script type="text/javascript">
-		jQuery("#jquery-accordion-menu").jqueryAccordionMenu();
-	</script>
-
 </body>
 </html>
