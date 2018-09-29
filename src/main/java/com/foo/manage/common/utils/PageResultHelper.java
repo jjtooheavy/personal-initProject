@@ -35,7 +35,7 @@ public class PageResultHelper extends PageHelper {
 		if (StringUtils.isEmpty(sidx)) {
 			return PageHelper.startPage(pageReq.getPage(), pageReq.getRows());
 		} else {
-			return PageHelper.startPage(pageReq.getPage(), pageReq.getRows(), sidx + " " + pageReq.getSord());
+			return PageHelper.startPage(pageReq.getPage(), pageReq.getRows(), sidx + StringUtils.STRING_SPACE + pageReq.getSord());
 		}
 	}
 

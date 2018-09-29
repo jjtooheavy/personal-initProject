@@ -9,6 +9,14 @@ import java.util.regex.Pattern;
  */
 public class StringUtils {
 
+	public static final String STRING_UNDER_LINE = "_";
+	
+	public static final String STRING_SPACE = " ";// 一个空格字符
+	
+	public static final String STRING_BLANK = "";// 空白字符串
+	
+	public static final String STRING_COMMA = ",";// 逗号
+	
 	/**
 	 * 驼峰命名字符串 转为下划线，全小写
 	 * @param str
@@ -20,7 +28,7 @@ public class StringUtils {
 			for (int i = 1; i < str.length(); i++) {
 				String s = str.substring(i, i + 1);
 				if (s.equals(s.toUpperCase()) && !Character.isDigit(s.charAt(0))) {
-					sb.append("_");
+					sb.append(STRING_UNDER_LINE);
 				}
 
 				sb.append(s.toLowerCase());
@@ -41,7 +49,7 @@ public class StringUtils {
 			for (int i = 1; i < str.length(); i++) {
 				String s = str.substring(i, i + 1);
 				if (s.equals(s.toUpperCase()) && !Character.isDigit(s.charAt(0))) {
-					sb.append("_");
+					sb.append(STRING_UNDER_LINE);
 				}
 
 				sb.append(s.toUpperCase());
@@ -65,7 +73,7 @@ public class StringUtils {
 	 */
 	public static String camelCaseName(String str) {
 		StringBuilder sb = new StringBuilder();
-		String[] split = str.split("_");
+		String[] split = str.split(STRING_UNDER_LINE);
 		sb.append(split[0].toLowerCase());
 		for (int i = 1; i < split.length; i++) {
 			sb.append(upperCase(split[i]));

@@ -33,6 +33,10 @@ var _rowNum=20;
 			<!-- boostrap -->
 			<link href="${ctxStatic}/plugin/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
 			<link href="${ctxStatic}/plugin/bootstrap/3.3.6/css/build.css" type="text/css" rel="stylesheet" />
+
+			<!-- layui -->
+<%-- 			<link href="${ctxStatic}/plugin/layui/css/layui.css" type="text/css" rel="stylesheet" /> --%>
+<%-- 			<script src="${ctxStatic}/plugin/layui/layui.js" type="text/javascript"></script> --%>
 			<!-- other -->
 			
 			<script src="${ctxStatic}/plugin/bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript"></script>

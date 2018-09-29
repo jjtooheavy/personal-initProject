@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.foo.manage.common.base.BaseService;
+import com.foo.manage.common.utils.Constants;
 import com.foo.manage.common.utils.ServiceResult;
 import com.foo.manage.common.utils.StringUtils;
 import com.foo.manage.common.utils.SubjectUtils;
@@ -43,7 +44,8 @@ public class UserService extends BaseService {
 	 */
 	public ServiceResult save(User user) {
 		if (StringUtils.isEmpty(user.getLoginPassword())) {
-			String loginPassword = SubjectUtils.md5Encrypt(user.getUserName(), "111111");
+			// 设置默认的登录密码 “111111”
+			String loginPassword = SubjectUtils.md5Encrypt(user.getUserName(), Constants.DEFAULT_USER_LOGIN_PASSWORD);
 			user.setLoginPassword(loginPassword);
 		}
 		return this.insertOrUpdate(User.class, user);

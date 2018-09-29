@@ -158,7 +158,4 @@ public class OperateLogAspect {
 		baseService.insert(log);
 	}
 
-	public static void main(String[] args) {
-		
-	}
 }

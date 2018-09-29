@@ -13,6 +13,8 @@ import org.apache.shiro.cache.CacheException;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.CollectionUtils;
 
+import com.foo.manage.common.utils.Constants;
+
 /**
  * redis 缓存工具类
  * @author changzhongq
@@ -23,7 +25,7 @@ public class RedisCache<K, V> implements Cache<K, V> {
 
 	private RedisTemplate<K, V> redisTemplate;
 
-	private String prefix = "shiro_redis:";
+	private String prefix = Constants.SHIRO_REDIS_NAME + ":";
 
 	public String getPrefix() {
 		return prefix;

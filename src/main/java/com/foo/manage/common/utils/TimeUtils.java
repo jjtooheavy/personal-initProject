@@ -31,6 +31,12 @@ public class TimeUtils {
 		return sdf.format(new Date());
 	}
 
+	/**
+	 * 将一个时间毫秒数，根据当前时间毫秒数，计算后返回显示多少时间前的数据格式，如要计算的时间“2018-09-29 10:00:00” 现在时间“2018-09-29 12:00:00” 计算结果：2小时前
+	 * @param nowTime 当前时间毫秒数
+	 * @param time 要计算的时间毫秒数
+	 * @return 已转换好的时间格式
+	 */
 	public static String formatBeforeDate(long nowTime, long time) {
 		String beforeTime = "";
 		long l = (nowTime - time) / 1000;// 总秒差

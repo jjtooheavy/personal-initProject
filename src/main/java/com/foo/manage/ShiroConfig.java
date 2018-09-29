@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import com.foo.manage.common.redis.ShiroRedisCacheManager;
+import com.foo.manage.common.utils.Constants;
 import com.foo.manage.modules.sys.realm.UserRealm;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -24,7 +25,7 @@ public class ShiroConfig {
 	public ShiroRedisCacheManager shiroRedisCacheManager(RedisTemplate redisTemplate) {
 		ShiroRedisCacheManager redisCacheManager = new ShiroRedisCacheManager(redisTemplate);
 		// name是key的前缀，可以设置任何值，无影响，可以设置带项目特色的值
-		redisCacheManager.createCache("shiro_redis");
+		redisCacheManager.createCache(Constants.SHIRO_REDIS_NAME);
 		return redisCacheManager;
 	}
 
@@ -36,8 +37,8 @@ public class ShiroConfig {
 
 		// 加密设置
 		HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
-		credentialsMatcher.setHashAlgorithmName("MD5");
-		credentialsMatcher.setHashIterations(1024);
+		credentialsMatcher.setHashAlgorithmName(Constants.SUBJECT_ALGORITHM_NAME_MD5);
+		credentialsMatcher.setHashIterations(Constants.SUBJECT_HASHTERATIONS);
 		// 设置认证密码算法及迭代复杂度
 		userRealm.setCredentialsMatcher(credentialsMatcher);
 		userRealm.setCachingEnabled(true);

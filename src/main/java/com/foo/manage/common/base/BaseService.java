@@ -182,7 +182,7 @@ public abstract class BaseService {
 			if ("serialVersionUID".equals(fieldName)) {
 				continue;
 			}
-			cloumns.append(StringUtils.underUpperScoreName(fieldName)).append(",");
+			cloumns.append(StringUtils.underUpperScoreName(fieldName)).append(StringUtils.STRING_COMMA);
 			Object fieldValue = null;
 			// 设置可见性
 			field.setAccessible(true);
@@ -222,7 +222,7 @@ public abstract class BaseService {
 			if ("serialVersionUID".equals(fieldName)) {
 				continue;
 			}
-			cloumns.append(StringUtils.underUpperScoreName(fieldName)).append(",");
+			cloumns.append(StringUtils.underUpperScoreName(fieldName)).append(StringUtils.STRING_COMMA);
 		}
 		List<List<Object>> listLists = new ArrayList<List<Object>>();
 		// 需要插入的数据

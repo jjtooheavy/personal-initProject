@@ -21,17 +21,17 @@ public class SubjectUtils {
 
 	public static CurrentUser getUser() {
 		RedisCache<String, Object> redisCache = getRedisCache();
-		Object currentUser = redisCache.get("currentUser");
+		Object currentUser = redisCache.get(Constants.CURRENT_USER_SIGN);
 		if (currentUser == null) {
 			currentUser = SecurityUtils.getSubject().getPrincipal();
-			redisCache.put("currentUser", currentUser);
+			redisCache.put(Constants.CURRENT_USER_SIGN, currentUser);
 		}
 		return currentUser == null ? new CurrentUser() : (CurrentUser) currentUser;
 	}
 
 	public static void setUser(Object user) {
-		SecurityUtils.getSubject().getSession().setAttribute("currentUser", user);
-		getRedisCache().put("currentUser", user);
+		SecurityUtils.getSubject().getSession().setAttribute(Constants.CURRENT_USER_SIGN, user);
+		getRedisCache().put(Constants.CURRENT_USER_SIGN, user);
 	}
 
 	public static String getUserId() {
@@ -43,11 +43,9 @@ public class SubjectUtils {
 	}
 
 	public static String md5Encrypt(String name, String password) {
-		String hashAlgorithmName = "MD5";
 		Object salt = ByteSource.Util.bytes(name);
-		int hashIterations = 1024;// 加密次数
 
-		Object result = new SimpleHash(hashAlgorithmName, password, salt, hashIterations);
+		Object result = new SimpleHash(Constants.SUBJECT_ALGORITHM_NAME_MD5, password, salt, Constants.SUBJECT_HASHTERATIONS);
 		return result.toString();
 	}
 

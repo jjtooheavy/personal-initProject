@@ -4,7 +4,7 @@
 <head>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <jsp:include page="/WEB-INF/views/include/base-include.jsp">
-	<jsp:param name="include" value="base,layer,jqgrid,layui" />
+	<jsp:param name="include" value="base,layer,layui,jqgrid,app" />
 </jsp:include>
 
 <title>qcz - 初始化框架</title>
@@ -58,16 +58,19 @@ body {
 	text-decoration: none;
 }
 
+.loginInfo a {
+	text-decoration: none;
+}
+
 #demo-list {
-	top: 10%;
+	top: 60px;
 }
 
 .header {
 	width: 100%;
-	height: 10%;
+	height: 60px;
 	min-width: 10%;
-	min-height: 76px;
-	background: #08a2ba;
+	background: #23262E;
 	color: white;
 }
 
@@ -91,25 +94,8 @@ body {
 
 .loginInfo {
 	position: absolute;
-	top: -7px;
+	top: -1px;
 	right: 30px;
-}
-
-.loginInfo a {
-	color: white;
-}
-
-.loginInfo ul li {
-	text-align: center;
-}
-
-.nav>li>a:hover {
-	background-color: #927a79;
-}
-
-.glyphicon {
-	font-size: 232%;
-	line-height: 1.5;
 }
 
 .current-site {
@@ -124,12 +110,24 @@ body {
 	<div class="header layui-header">
 		<div class="title"><img src="${ctxStatic }/common/images/logo6.png"></div>
 		<div class="loginInfo">
-			<ul class="nav nav-pills">
+			<ul class="layui-nav">
+				<li class="layui-nav-item"><a href="javascript:;"><img src="//t.cn/RCzsdCq" class="layui-nav-img">${currentUser.userName}</a>
+					<dl class="layui-nav-child">
+						<dd>
+							<a href="javascript:;">修改信息</a>
+						</dd>
+						<dd>
+							<a href="exit" class="exitUser">退出</a>
+						</dd>
+					</dl>
+				</li>
+			</ul>
+			<!-- <ul class="nav nav-pills">
 				<li><a href="#"> <span class="glyphicon glyphicon-user" aria-hidden="true"></span><br> <span>用户：管理员</span>
 				</a></li>
 				<li><a href="exit" class="exitUser"> <span class="glyphicon glyphicon-off" aria-hidden="true"></span><br> <span>退出</span>
 				</a></li>
-			</ul>
+			</ul> -->
 		</div>
 	</div>
 	<div class="content">
@@ -139,22 +137,22 @@ body {
 					<c:choose>
 						<c:when test="${itemOne.hasChild }">
 							<li class="layui-nav-item layui-nav-itemed">
-								<a href="#"><i class="${itemOne.icon }"></i>&nbsp;&nbsp;${itemOne.name } </a>
+								<a href="javascript:;"><i class="${itemOne.icon }"></i>&nbsp;&nbsp;${itemOne.name } </a>
 								<dl class="layui-nav-child">
 									<c:forEach items="${itemOne.childrens }" var="itemTwo">
 										<c:choose>
 											<c:when test="${itemTwo.hasChild }">
 												<li class="layui-nav-item layui-nav-itemed">
-													<a href="#"><i class="${itemTwo.icon }"></i>&nbsp;&nbsp;${itemTwo.name } </a>
+													<a href="javascript:;"><i class="${itemTwo.icon }"></i>&nbsp;&nbsp;${itemTwo.name } </a>
 													<dl class="layui-nav-child">
 														<c:forEach items="${itemTwo.childrens }" var="itemThree">
-															<dd><a data-title="${itemOne.name} > ${itemTwo.name} > ${itemThree.name}" class="J_menuItem menua" href="#"><i class="${itemThree.icon }"></i>&nbsp;&nbsp;${itemThree.name } </a></dd>
+															<dd class="J_menuItem" data-title="${itemOne.name} > ${itemTwo.name} > ${itemThree.name}"><a href="${ctx}${itemThree.url }"><i class="${itemThree.icon }"></i>&nbsp;&nbsp;${itemThree.name } </a></dd>
 														</c:forEach>
 													</dl>
 												</li>
 											</c:when>
 											<c:otherwise>
-												<dd><a data-title="${itemOne.name} > ${itemTwo.name}" class="J_menuItem menua" href="${ctx}${itemTwo.url }"><i class="${itemTwo.icon }"></i>&nbsp;&nbsp;${itemTwo.name } </a></dd>
+												<dd class="J_menuItem" data-title="${itemOne.name} > ${itemTwo.name}"><a href="${ctx}${itemTwo.url }"><i class="${itemTwo.icon }"></i>&nbsp;&nbsp;${itemTwo.name } </a></dd>
 											</c:otherwise>
 										</c:choose>
 									</c:forEach>
@@ -162,7 +160,7 @@ body {
 							</li>
 						</c:when>
 						<c:otherwise>
-							<li class="layui-nav-item"><a data-title="${itemOne.name }" class="J_menuItem menua" href="${ctx}${itemOne.url }"><i class="${itemOne.icon }"></i>&nbsp;&nbsp;${itemOne.name } </a></li>
+							<li class="layui-nav-item J_menuItem" data-title="${itemOne.name}"><a href="${ctx}${itemOne.url }"><i class="${itemOne.icon }"></i>&nbsp;&nbsp;${itemOne.name } </a></li>
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
@@ -176,28 +174,21 @@ body {
 	</div>
 
 	<script type="text/javascript">
-		layui.use('element', function(){
-		  var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
-		  
-		  //监听导航点击
-		  element.on('nav(demo)', function(elem){
-			layer.msg(elem.text());
-		  });
+		layui.use('element', function() {
+			var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+
+			//监听导航点击
+			element.on('nav(demo)', function(elem) {
+				$("#site").text(elem.attr("data-title"));
+			});
 		});
 
 		$(function() {
 			//菜单点击
 			$(".J_menuItem").on('click', function() {
-				var url = $(this).attr('href');
+				var url = $(this).find("a").attr('href');
 				$("#J_iframe").attr('src', url);
 				return false;
-			});
-			$(".menua").click(function(event) {
-				if ($(this).attr("href") == "#") {
-					return;
-				}
-				var thisTitle = $(this).attr("data-title");
-				$("#site").text(thisTitle);
 			});
 		});
 	</script>
