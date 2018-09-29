@@ -72,7 +72,7 @@ public class ExcelUtils {
 			Map<String, Object> rowMap = CommonUtils.objToMapUpper(rows.get(i));
 			for (int j = 0; j < titleNames.size(); j++) {
 				String title = titleNames.get(j);
-				row.createCell(j).setCellValue(rowMap.get(title) + "");
+				row.createCell(j).setCellValue(rowMap.get(title) + StringUtils.STRING_BLANK);
 			}
 		}
 		return wb;
