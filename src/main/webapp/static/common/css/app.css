@@ -1,58 +1,98 @@
 @CHARSET "UTF-8";
 
 #searchForm {
-    padding: 5px 0 5px 15px;
+	padding: 5px 0 5px 15px;
 }
 
 table th div {
-    text-align: center;
+	text-align: center;
 }
 
 .ui-jqgrid .ui-jqgrid-caption {
-    font-size: 20px;
-    background: #dff0d8;
+	font-size: 20px;
+	background: #dff0d8;
 }
 
 .ui-jqgrid-title {
-    font-weight: bold;
+	font-weight: bold;
 }
 
 .ui-th-column {
-    background: #f5f5f5;
+	background: #f5f5f5;
 }
 
 #operator {
-    bottom: 0px;
-    position: fixed;
-    z-index: 9999;
-    width: 77%;
-    text-align: center;
-    padding: 10px;
-    background: white;
+	bottom: 0px;
+	position: fixed;
+	z-index: 9999;
+	width: 77%;
+	text-align: center;
+	padding: 10px;
+	background: white;
 }
 
-.table > tbody > tr > td {
-    vertical-align: middle;
-    margin-bottom: 0;
+.table>tbody>tr>td {
+	vertical-align: middle;
+	margin-bottom: 0;
 }
 
-.table > tbody > tr > td > label {
-    margin-bottom: 0;
+.table>tbody>tr>td>label {
+	margin-bottom: 0;
 }
 
 #formDiv {
-    margin: 0 auto;
-    width: 80%;
-    height: 100%;
+	margin: 0 auto;
+	width: 80%;
+	height: 100%;
 }
 
 .choose {
-    position: absolute;
-    z-index: 999;
-    right: 0;
+	position: absolute;
+	z-index: 999;
+	right: 0;
 }
 
 .chooseDiv {
-    width: 100%;
-    position: relative;
+	width: 100%;
+	position: relative;
+}
+
+.text-muted {
+	color: #777;
+}
+
+.text-primary {
+	color: #337ab7;
+}
+
+a.text-primary:hover, a.text-primary:focus {
+	color: #286090;
+}
+
+.text-success {
+	color: #3c763d;
+}
+
+a.text-success:hover, a.text-success:focus {
+	color: #2b542c;
+}
+
+.text-info {
+	color: #31708f;
+}
+
+a.text-info:hover, a.text-info:focus {
+	color: #245269;
+}
+
+.text-warning {
+	color: #8a6d3b;
+}
+
+a.text-warning:hover, a.text-warning:focus {
+	color: #66512c;
+}
+
+.text-danger {
+	color: #a94442;
 }
